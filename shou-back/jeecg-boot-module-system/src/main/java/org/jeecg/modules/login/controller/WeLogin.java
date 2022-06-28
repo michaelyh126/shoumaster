@@ -1,5 +1,6 @@
 package org.jeecg.modules.login.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,6 +15,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
+import org.jeecg.common.util.PasswordUtil;
 import org.jeecg.common.util.RedisUtil;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.base.service.BaseCommonService;
@@ -41,6 +43,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -65,6 +68,44 @@ public class WeLogin {
     private ISysTenantService sysTenantService;
     @Autowired
     private ISysDictService sysDictService;
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public Result<JSONObject> VoiceprintRegister(@RequestBody JSONObject jsonObject) throws IOException {
+        Result<JSONObject> result = new Result<JSONObject>();
+        SysUser user=new SysUser();
+        String username = jsonObject.getString("username");
+        //未设置密码，则随机生成一个密码
+        String password = jsonObject.getString("password");
+
+        if(oConvertUtils.isEmpty(password)){
+            password = RandomUtil.randomString(8);
+        }
+        SysUser sysUser1 = sysUserService.getUserByName(username);
+        if (sysUser1 != null) {
+            result.setMessage("用户名已注册");
+            result.setSuccess(false);
+            return result;
+        }
+        try {
+            user.setCreateTime(new Date());// 设置创建时间
+            String salt = oConvertUtils.randomGen(8);
+            String passwordEncode = PasswordUtil.encrypt(username, password, salt);
+            user.setSalt(salt);
+            user.setUsername(username);
+            user.setRealname(username);
+            user.setPassword(passwordEncode);
+            user.setStatus(CommonConstant.USER_UNFREEZE);
+            user.setDelFlag(CommonConstant.DEL_FLAG_0);
+            user.setActivitiSync(CommonConstant.ACT_SYNC_0);
+            sysUserService.addUserWithRole(user,"ee8626f80f7c2619917b6236f3a7f02b");
+            result.success("注册成功");
+        } catch (Exception e) {
+            result.error500("注册失败");
+        }
+        return result;
+    }
+
+
 
     @RequestMapping(value = "/VoiceprintLogin", method = RequestMethod.POST)
     public Result<JSONObject> VoiceprintLogin(@RequestBody MultipartFile file) throws IOException {
@@ -246,6 +287,33 @@ public class WeLogin {
         result.setResult(obj);
         result.success("登录成功");
         return result;
+    }
+
+
+    @RequestMapping(value = "/saveAudio", method = RequestMethod.POST)
+    public Result<JSONObject> saveAudio(@RequestBody MultipartFile file) throws IOException {
+        Result<JSONObject> result = new Result<JSONObject>();
+        boolean ifFileExist=false;
+        if (file.isEmpty()) {
+            return result.error500("文件为空");
+        }
+        String fileName = file.getOriginalFilename();
+        File dest = new File(new File("C:\\Users\\86139\\Desktop\\VoiceprintRecognition-Pytorch\\audio_db").getAbsolutePath()+ "/" + fileName);
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        try {
+            file.transferTo(dest); // 保存文件
+            ifFileExist=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return result.error500("error");
+        }
+
+        if(ifFileExist==false){
+            return result.error500("文件保存出错");
+        }
+        return Result.ok("保存完毕");
     }
 
 

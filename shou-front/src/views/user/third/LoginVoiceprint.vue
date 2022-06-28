@@ -6,9 +6,9 @@
       <h3>录音时长：{{ recorder && recorder.duration.toFixed(4) }}</h3>
       <br />
       <a-button type="primary" @click="handleStart">开始录音</a-button>
-      <a-button type="info" @click="handlePause">暂停录音</a-button>
-      <a-button type="success" @click="handleResume">继续录音</a-button>
-      <a-button type="warning" @click="handleStop">停止录音</a-button>
+<!--      <a-button type="info" @click="handlePause">暂停录音</a-button>-->
+<!--      <a-button type="success" @click="handleResume">继续录音</a-button>-->
+<!--      <a-button type="warning" @click="handleStop">停止录音</a-button>-->
       <br />
       <br />
 <!--      <h3>-->
