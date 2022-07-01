@@ -22,6 +22,7 @@ import java.net.UnknownHostException;
 * 提醒: 需要集成mogodb请删除 exclude={MongoAutoConfiguration.class}
 */
 @Slf4j
+@EnableScheduling
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 public class JeecgSystemApplication extends SpringBootServletInitializer {

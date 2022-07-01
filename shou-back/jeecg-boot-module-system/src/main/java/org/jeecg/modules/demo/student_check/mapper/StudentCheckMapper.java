@@ -13,5 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Version: V1.0
  */
 public interface StudentCheckMapper extends BaseMapper<StudentCheck> {
+    Integer selectCountOfException();
+    Integer selectCountOfEBack();
+    Integer selectCountOfOut();
 
 }

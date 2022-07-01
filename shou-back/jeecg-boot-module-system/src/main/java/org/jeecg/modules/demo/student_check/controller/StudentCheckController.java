@@ -9,10 +9,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.ibatis.annotations.Select;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.demo.student_check.entity.StudentCheck;
+import org.jeecg.modules.demo.student_check.mapper.StudentCheckMapper;
 import org.jeecg.modules.demo.student_check.service.IStudentCheckService;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -49,7 +52,9 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 public class StudentCheckController extends JeecgController<StudentCheck, IStudentCheckService> {
 	@Autowired
 	private IStudentCheckService studentCheckService;
-	
+	@Autowired
+	private StudentCheckMapper studentCheckMapper;
+
 	/**
 	 * 分页列表查询
 	 *
@@ -71,7 +76,7 @@ public class StudentCheckController extends JeecgController<StudentCheck, IStude
 		IPage<StudentCheck> pageList = studentCheckService.page(page, queryWrapper);
 		return Result.OK(pageList);
 	}
-	
+
 	/**
 	 *   添加
 	 *
@@ -85,7 +90,7 @@ public class StudentCheckController extends JeecgController<StudentCheck, IStude
 		studentCheckService.save(studentCheck);
 		return Result.OK("添加成功！");
 	}
-	
+
 	/**
 	 *  编辑
 	 *
@@ -99,7 +104,7 @@ public class StudentCheckController extends JeecgController<StudentCheck, IStude
 		studentCheckService.updateById(studentCheck);
 		return Result.OK("编辑成功!");
 	}
-	
+
 	/**
 	 *   通过id删除
 	 *
@@ -113,7 +118,7 @@ public class StudentCheckController extends JeecgController<StudentCheck, IStude
 		studentCheckService.removeById(id);
 		return Result.OK("删除成功!");
 	}
-	
+
 	/**
 	 *  批量删除
 	 *
@@ -127,7 +132,7 @@ public class StudentCheckController extends JeecgController<StudentCheck, IStude
 		this.studentCheckService.removeByIds(Arrays.asList(ids.split(",")));
 		return Result.OK("批量删除成功!");
 	}
-	
+
 	/**
 	 * 通过id查询
 	 *
@@ -167,5 +172,21 @@ public class StudentCheckController extends JeecgController<StudentCheck, IStude
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, StudentCheck.class);
     }
+	 @GetMapping(value = "/getException")
+	 public Result<Integer> getException() {
+		Integer count=studentCheckMapper.selectCountOfException();
+		 return Result.OK(count);
+	 }
+
+	 @GetMapping(value = "/getBack")
+	 public Result<Integer> getBack() {
+		 Integer count=studentCheckMapper.selectCountOfEBack();
+		 return Result.OK(count);
+	 }
+	 @GetMapping(value = "/getOut")
+	 public Result<Integer> getOut() {
+		 Integer count=studentCheckMapper.selectCountOfOut();
+		 return Result.OK(count);
+	 }
 
 }

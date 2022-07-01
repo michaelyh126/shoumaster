@@ -44,7 +44,7 @@ public class StudentRecordsServiceImpl extends ServiceImpl<StudentRecordsMapper,
              exception="0";
              SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
              Date date=new Date();
-            Date returnTime= StudentRecordsServiceImpl.addHour(date,10);
+            Date returnTime= StudentRecordsServiceImpl.addHour(date,1800);
              studentRecords.setName(name).setNo(no).setPhone(phone).setOpenid(openid).setState(state).setIsException(exception)
              .setReturnTime(returnTime);
          }
@@ -67,7 +67,8 @@ public class StudentRecordsServiceImpl extends ServiceImpl<StudentRecordsMapper,
                 .setOpenid(openid)
                 .setLongitude(MyLongitude)
                 .setLatitude(MyLatitude)
-                .setDistance(distance);
+                .setDistance(distance)
+                .setSignTime(new Date());
 
         StudentRecords lastStudentRecord =studentRecordsMapper.getNew();
        String flag= lastStudentRecord.getIsException();
@@ -84,7 +85,7 @@ public class StudentRecordsServiceImpl extends ServiceImpl<StudentRecordsMapper,
             studentRecords.setIsException("0");
             studentRecords.setState("1468388126513741825");
             Date date=new Date();
-            Date returnTime= StudentRecordsServiceImpl.addHour(date,10);
+            Date returnTime= StudentRecordsServiceImpl.addHour(date,1800);
             studentRecords.setReturnTime(returnTime);
             studentRecordsMapper.insert(studentRecords);
         }

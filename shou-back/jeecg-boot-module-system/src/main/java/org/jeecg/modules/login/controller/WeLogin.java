@@ -45,6 +45,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "openid")
@@ -97,7 +98,7 @@ public class WeLogin {
             user.setStatus(CommonConstant.USER_UNFREEZE);
             user.setDelFlag(CommonConstant.DEL_FLAG_0);
             user.setActivitiSync(CommonConstant.ACT_SYNC_0);
-            sysUserService.addUserWithRole(user,"ee8626f80f7c2619917b6236f3a7f02b");
+            sysUserService.addUserWithRole(user, "ee8626f80f7c2619917b6236f3a7f02b");
             result.success("注册成功");
         } catch (Exception e) {
             result.error500("注册失败");
@@ -114,7 +115,8 @@ public class WeLogin {
         if(ifFileExist==false){
             return result.error500("文件保存出错");
         }
-        String url="http://127.0.0.1:5000/voiceprint";
+//        String url="http://127.0.0.1:5000/voiceprint";
+        String url="https://6fd6-183-193-155-185.jp.ngrok.io/voiceprint";
         HttpURLConnection conn = (HttpURLConnection) new URL(url)
                 .openConnection();
         //可以设置很多属性
@@ -216,6 +218,7 @@ public class WeLogin {
             return false;
         }
         String fileName = file.getOriginalFilename();
+//        File dest = new File(new File("/usr/local/jeecgboot/audio").getAbsolutePath()+ "/" + fileName);
         File dest = new File(new File("C:\\Users\\86139\\Desktop\\VoiceprintRecognition-Pytorch\\audio").getAbsolutePath()+ "/" + fileName);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
@@ -298,6 +301,7 @@ public class WeLogin {
             return result.error500("文件为空");
         }
         String fileName = file.getOriginalFilename();
+//        File dest = new File(new File("/usr/local/jeecgboot/audio_db").getAbsolutePath()+ "/" + fileName);
         File dest = new File(new File("C:\\Users\\86139\\Desktop\\VoiceprintRecognition-Pytorch\\audio_db").getAbsolutePath()+ "/" + fileName);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
@@ -305,6 +309,7 @@ public class WeLogin {
         try {
             file.transferTo(dest); // 保存文件
             ifFileExist=true;
+            sendTOPython(fileName);
         } catch (Exception e) {
             e.printStackTrace();
             return result.error500("error");
@@ -316,6 +321,32 @@ public class WeLogin {
         return Result.ok("保存完毕");
     }
 
+
+    public void sendTOPython(String param) throws IOException {
+        OutputStream out = null;
+        String url = "https://6fd6-183-193-155-185.jp.ngrok.io/voiceprintResgister";
+        HttpURLConnection conn = (HttpURLConnection) new URL(url)
+                .openConnection();
+        conn.setRequestMethod("POST");
+//        conn.setReadTimeout(30000);
+//        conn.setConnectTimeout(100000);
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        out = conn.getOutputStream();
+        out.write(param.getBytes());
+        out.flush(); //清空缓冲区,发送数据
+        out.close();
+        if (conn.getResponseCode() == 200) {
+            InputStream inputStream = conn.getInputStream();
+            System.out.println(inputStream);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            String line;
+            line = reader.readLine();
+            reader.close();
+            //该干的都干完了,记得把连接断了
+            conn.disconnect();
+        }
+    }
 
 
 

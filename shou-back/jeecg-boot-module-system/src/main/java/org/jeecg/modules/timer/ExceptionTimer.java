@@ -13,6 +13,5 @@ public class ExceptionTimer {
     @Scheduled(fixedRate = 5*1000)
 public  void time_out(){
        studentRecordsService.getException();
-        System.out.println("end");
     }
 }

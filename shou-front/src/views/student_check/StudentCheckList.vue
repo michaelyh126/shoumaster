@@ -147,11 +147,11 @@
             align:"center",
             dataIndex: 'community'
           },
-          // {
-          //   title:'状态',
-          //   align:"center",
-          //   dataIndex: 'state_dictText'
-          // },
+          {
+            title:'状态',
+            align:"center",
+            dataIndex: 'state_dictText'
+          },
           // {
           //   title:'逻辑删除',
           //   align:"center",

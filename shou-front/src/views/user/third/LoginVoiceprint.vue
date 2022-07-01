@@ -24,7 +24,7 @@
 <!--      <a-button type="info" @click="handlePausePlay">暂停播放</a-button>-->
 <!--      <a-button type="success" @click="handleResumePlay">继续播放</a-button>-->
 <!--      <a-button type="warning" @click="handleStopPlay">停止播放</a-button>-->
-<!--      <a-button type="error" @click="handleDestroy">销毁录音</a-button>-->
+      <a-button type="error" @click="handleDestroy">销毁录音</a-button>
       <a-button type="primary" @click="uploadRecord">上传</a-button>
     </div>
   </div>
