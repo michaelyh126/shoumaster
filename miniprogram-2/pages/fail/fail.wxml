@@ -1,0 +1,10 @@
+<!--pages/fail/fail.wxml-->
+
+<view class='main'>
+<image src='/image/OIP-C.jpg' style="width:150px" mode="widthFix"></image>
+</view>
+<view class='text'>
+<view class='main'>
+<text>错误</text>
+</view>
+</view>

@@ -35,9 +35,9 @@ public class StudentCheckServiceImpl extends ServiceImpl<StudentCheckMapper, Stu
     }
 
     @Override
-    public void insert(String name, String no, String phone, String openid,String state) {
+    public void insert(String name, String no, String phone, String openid,String state,String community) {
         StudentCheck studentCheck=new StudentCheck();
-        studentCheck.setName(name).setNo(no).setPhone(phone).setOpenid(openid).setState(state).setIsException("0");
+        studentCheck.setName(name).setNo(no).setPhone(phone).setOpenid(openid).setState(state).setIsException("0").setCommunity(community);
         baseMapper.insert(studentCheck);
     }
 }

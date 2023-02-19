@@ -11,5 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IStudentCheckService extends IService<StudentCheck> {
 public boolean IfOpenid(String openid);
-public void insert(String name,String no,String phone,String openid,String state);
+public void insert(String name,String no,String phone,String openid,String state,String community);
 }

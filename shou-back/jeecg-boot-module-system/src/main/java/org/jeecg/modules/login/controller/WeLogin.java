@@ -202,11 +202,11 @@ public class WeLogin {
     //首次登记并签到
     @RequestMapping("/InsertStudentCheck")
     public Result<String> insertStudentCheck(@RequestParam(name = "name") String name, String no, String phone, String openid, String state,
-  String MyLongitude,String MyLatitude,String distance  ) throws Exception {
+  String MyLongitude,String MyLatitude,String distance,String community  ) throws Exception {
         if(state.equals("1")){state="1468387957525233665";}
         else{state="1468388126513741825";}
-        studentCheckService.insert(name,no,phone,openid,state);
-        studentRecordsService.firstInsert(name,no,phone,openid,state,MyLongitude,MyLatitude,distance);
+        studentCheckService.insert(name,no,phone,openid,state,community);
+        studentRecordsService.firstInsert(name,no,phone,openid,state,MyLongitude,MyLatitude,distance,community);
         Result<String> result=new Result();
         result.setSuccess(true);
         result.setResult("成功");

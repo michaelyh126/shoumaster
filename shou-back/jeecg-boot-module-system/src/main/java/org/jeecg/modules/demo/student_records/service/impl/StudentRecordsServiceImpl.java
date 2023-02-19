@@ -32,12 +32,12 @@ public class StudentRecordsServiceImpl extends ServiceImpl<StudentRecordsMapper,
     @Autowired
     private StudentCheckMapper studentCheckMapper;
     @Override
-    public void firstInsert(String name,String no,String phone,String openid,String state,String MyLongitude,String MyLatitude,String distance) {
+    public void firstInsert(String name,String no,String phone,String openid,String state,String MyLongitude,String MyLatitude,String distance,String community) {
          StudentRecords studentRecords=new StudentRecords();
          String exception;
          if(state.equals("1468387957525233665")){
              exception="1";
-             studentRecords.setName(name).setNo(no).setPhone(phone).setOpenid(openid).setState(state).setIsException(exception)
+             studentRecords.setName(name).setNo(no).setPhone(phone).setOpenid(openid).setState(state).setIsException(exception).setCommunity(community)
              .setLatitude(MyLatitude).setLongitude(MyLongitude).setDistance(distance);
          }
          else {
@@ -46,7 +46,7 @@ public class StudentRecordsServiceImpl extends ServiceImpl<StudentRecordsMapper,
              Date date=new Date();
             Date returnTime= StudentRecordsServiceImpl.addHour(date,1800);
              studentRecords.setName(name).setNo(no).setPhone(phone).setOpenid(openid).setState(state).setIsException(exception)
-             .setReturnTime(returnTime);
+             .setReturnTime(returnTime).setCommunity(community);
          }
 
          baseMapper.insert(studentRecords);
@@ -65,6 +65,7 @@ public class StudentRecordsServiceImpl extends ServiceImpl<StudentRecordsMapper,
                 .setNo(studentCheck.getNo())
                 .setPhone(studentCheck.getPhone())
                 .setOpenid(openid)
+                .setCommunity(studentCheck.getCommunity())
                 .setLongitude(MyLongitude)
                 .setLatitude(MyLatitude)
                 .setDistance(distance)

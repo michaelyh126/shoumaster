@@ -1,0 +1,47 @@
+<!--pages/list/list.wxml-->
+<scroll-view>
+  <view class='main'>
+  <image src='/image/th.jpg' style="width:150px" mode="widthFix"></image>
+  </view>
+ 
+  <van-cell-group>
+  <van-field
+    value="{{ Sname }}"
+    required
+    label="称呼"
+    placeholder="请问你怎么称呼"
+    bind:change="onChange1"
+  />
+
+  <van-field
+    value="{{ no }}"
+    label="学号"
+    placeholder="请输入你的学号"
+    required
+    bind:change="onChange2"
+  />
+  <van-field
+    value="{{ phone }}"
+    label="备注"
+    placeholder="请输入备注"
+    required
+    bind:change="onChange3"
+  />
+  <van-field
+    value="{{ community }}"
+    label="所属小区"
+    placeholder="请输入所属小区"
+    required
+    bind:change="onChange4"
+  />
+</van-cell-group>
+<text>\n</text>
+<van-radio-group value="{{ state }}" bind:change="onChange" direction="horizontal">
+  <van-radio name="1">回寝</van-radio>
+  <van-radio name="2">外出</van-radio>
+</van-radio-group>
+<text>\n</text>
+<button type="primary" bindtap="commit">commit</button>
+<text>\n</text>
+<!-- <van-checkbox class="text2" value="{{ checked }}" bind:change="onCheck">登记时需要获取您的地理位置，姓名，学号，手机号信息。获取的信息只会被用来签到，不会用于其他用途，若您同意请勾选本按钮</van-checkbox> -->
+</scroll-view>

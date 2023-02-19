@@ -1,0 +1,9 @@
+<!--pages/success/success.wxml-->
+<view class='main'>
+<image src='/image/0000.jpg' style="width:150px" mode="widthFix"></image>
+</view>
+<view class='text'>
+<view class='main'>
+<text>成功</text>
+</view>
+</view>

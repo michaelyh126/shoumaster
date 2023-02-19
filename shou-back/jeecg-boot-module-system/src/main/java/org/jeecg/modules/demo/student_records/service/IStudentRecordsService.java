@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @Version: V1.0
  */
 public interface IStudentRecordsService extends IService<StudentRecords> {
-void firstInsert(String name,String no,String phone,String openid,String state,String MyLongitude,String MyLatitude,String distance);
+void firstInsert(String name,String no,String phone,String openid,String state,String MyLongitude,String MyLatitude,String distance,String community);
 void insert(String openid,String MyLongitude,String MyLatitude,String distance);
 void getException();
 }
