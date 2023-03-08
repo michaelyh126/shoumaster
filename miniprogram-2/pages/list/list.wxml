@@ -42,6 +42,5 @@
 </van-radio-group>
 <text>\n</text>
 <button type="primary" bindtap="commit">commit</button>
-<text>\n</text>
 <!-- <van-checkbox class="text2" value="{{ checked }}" bind:change="onCheck">登记时需要获取您的地理位置，姓名，学号，手机号信息。获取的信息只会被用来签到，不会用于其他用途，若您同意请勾选本按钮</van-checkbox> -->
 </scroll-view>
